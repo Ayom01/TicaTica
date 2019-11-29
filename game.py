@@ -24,16 +24,16 @@ class Player:
         self.velocity = 2
         self.score = 0
     def play_bot(self, fruit_x, fruit_y):
-            if fruit_y > self.pos_y:
+            if fruit_y - self.velocity >= self.pos_y:
                 self.speed_y = self.velocity
                 self.speed_x = 0
-            elif fruit_y < self.pos_y:
+            elif fruit_y + self.velocity <= self.pos_y:
                 self.speed_y = -self.velocity
-                self.pos_x = 0
-            elif fruit_x > self.pos_x:
+                self.speed_x = 0
+            elif fruit_x - self.velocity >= self.pos_x:
                 self.speed_x = self.velocity
                 self.speed_y = 0
-            elif fruit_x < self.pos_x:
+            elif fruit_x + self.velocity <= self.pos_x:
                 self.speed_x = -self.velocity
                 self.speed_y = 0
 
@@ -78,7 +78,7 @@ class Wall:
 
 pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("NotEXE")
+pygame.display.set_caption("TicaTica")
 
 player_1 = Player()
 player_2 = Player()
@@ -202,10 +202,11 @@ while True:
     wall_left.x, wall_left.y])
 
     # Game-Over
-    if player_1.score == 20 or player_2.score == 20:
+    if player_1.score == 20 or player_2.score == 20 or bot.score == 20:
         print("\33[31m-=-" * 5 + "SCORE" + "-=-" * 5 + "\33[m")
         print(f"""\33[34mPlayer 1: {player_1.score}\33[m
-\33[35mPlayer 2: {player_2.score}\33[m""")
+\33[35mPlayer 2: {player_2.score}\33[m
+\33[36mBot: {bot.score}\33[m""")
         sleep(1)
         break
 
